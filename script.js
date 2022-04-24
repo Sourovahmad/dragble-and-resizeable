@@ -1,11 +1,12 @@
 
 var box = document.getElementById("box");
 var boxWrapper = document.getElementById("box-wrapper");
-const minWidth = 40;
-const minHeight = 40;
 
+var initX, initY, mousePressX, mousePressY;
 
-var initX, initY, mousePressX, mousePressY, initW, initH, initRotate;
+const itemdimensions = [];
+itemdimensions[0] = {};
+itemdimensions[1] = {};
 
 function repositionElement(x, y) {
 
@@ -13,6 +14,13 @@ function repositionElement(x, y) {
     boxWrapper.style.top = y + 'px';
 
     elementFinder('selected_item').innerHTML = 'left: ' + x + "px" + ' top: ' + y + "px";
+
+    const item1 = {
+        'left': x,
+        'top': y
+    }
+    
+    itemdimensions[0] = item1;
 
 }
 
@@ -77,6 +85,12 @@ function repositionElement_box_2(x, y) {
     box_2_wrapper.style.top = y + 'px';
     elementFinder('selected_item_2').innerHTML = 'left: ' + x + "px" + ' top: ' + y + "px";
 
+    const item2 = {
+        'left': x,
+        'top': y
+    }
+    itemdimensions[1] = item2;
+
 }
 
 
@@ -121,5 +135,10 @@ box_2_wrapper.addEventListener('mousedown', function (event) {
 
 repositionElement_box_2(400, 200);
 
+
+
+elementFinder('savebutton').addEventListener('click', function(){
+    console.log(JSON.stringify(itemdimensions));
+});
 
 
