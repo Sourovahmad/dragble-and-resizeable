@@ -119,7 +119,7 @@
 
 .customModal{
     height: 400px;
-    width: 800px;
+    width: 100%;
     background-color: tomato;
     overflow: hidden;
     margin: auto;

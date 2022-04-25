@@ -1,6 +1,9 @@
 
-var box = document.getElementById("box");
-var boxWrapper = document.getElementById("box-wrapper");
+var box = elementFinder("box");
+var boxWrapper = elementFinder("box-wrapper");
+
+const containerWidth = elementFinder('full_container').offsetWidth;
+const containerHeight = elementFinder('full_container').offsetHeight;
 
 var initX, initY, mousePressX, mousePressY;
 
@@ -10,10 +13,13 @@ itemdimensions[1] = {};
 
 function repositionElement(x, y) {
 
-    boxWrapper.style.left = x + 'px';
-    boxWrapper.style.top = y + 'px';
+    const LeftinPercentage = ((x*100)/containerWidth).toFixed(2);
+    const TopinPercentage = ((y*100)/containerHeight).toFixed(2);
 
-    elementFinder('selected_item').innerHTML = 'left: ' + x + "px" + ' top: ' + y + "px";
+    boxWrapper.style.left = LeftinPercentage + '%';
+    boxWrapper.style.top = TopinPercentage + '%';
+
+    elementFinder('selected_item').innerHTML = 'left: ' + LeftinPercentage + "%" + ' top: ' + TopinPercentage + "%";
 
     const item1 = {
         'left': x,
@@ -81,13 +87,16 @@ var initX_box_2, initY_box_2, mousePressX_box_2, mousePressY_box_2;
 
 function repositionElement_box_2(x, y) {
 
-    box_2_wrapper.style.left = x + 'px';
-    box_2_wrapper.style.top = y + 'px';
-    elementFinder('selected_item_2').innerHTML = 'left: ' + x + "px" + ' top: ' + y + "px";
+    const LeftinPercentage_2 = ((x*100)/containerWidth).toFixed(2);
+    const TopinPercentage_2 = ((y*100)/containerHeight).toFixed(2);
+
+    box_2_wrapper.style.left = LeftinPercentage_2 + '%';
+    box_2_wrapper.style.top = TopinPercentage_2 + '%';
+    elementFinder('selected_item_2').innerHTML = 'left: ' + LeftinPercentage_2 + "%" + ' top: ' + TopinPercentage_2 + "%";
 
     const item2 = {
-        'left': x,
-        'top': y
+        'left': LeftinPercentage_2,
+        'top': TopinPercentage_2
     }
     itemdimensions[1] = item2;
 
@@ -116,7 +125,6 @@ box_2_wrapper.addEventListener('mousedown', function (event) {
 
 
     function eventMoveHandler_2(event) {
-        console.log(event);
         repositionElement_box_2(initX_box_2 + (event.clientX - mousePressX_box_2),
         initY_box_2 + (event.clientY - mousePressY_box_2));
     }
