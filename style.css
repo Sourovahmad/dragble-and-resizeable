@@ -3,6 +3,7 @@
     position: absolute;
     user-select: none;
     transform: translate(-50%, -50%);
+
     height: 80px;
     width: 80px;
 }
