@@ -10,36 +10,30 @@
 </head>
 <body>
     
-   
-    <div class="section w-100 text-center mb-4 mt-3">
-      Item 1 :   <h4 id="selected_item"> 
-      
-       
-        </h4>
-
-        <h5><span id="box_1_dimensin_details"></span>  </h5>
-  
-
-     
-    </div>
 
 
        
-    <div class="section w-100 text-center mb-4 mt-3">
+    <!-- <div class="section w-100 text-center mb-4 mt-3">
         Item 2 :   <h4 id="selected_item_2"> 
           </h4>
-    </div>
+    </div> -->
 
 
-    <div class="w-100 text-center mt-2 mb-2">
-        <button class="btn btn-info" id="addNewSectionButton"> Add Section </button>
-
-    </div>
-
+  
 
 
     <!-- item 1  -->
     <div class="customModal" id="full_container">
+
+
+           
+    <div class="section_dimensionDetails text-center">
+        <h5><span id="box_1_dimensin_details"></span>  </h5>
+    </div>
+
+
+        <img id="output_bg_image" alt="" style="width: 100%;" draggable="false">
+        <!-- <img id="output_bg_image" width="100%" /> -->
 
         <div class="firstBox" id="firstBox">
             <div class="box-wrapper" id="box-wrapper">
@@ -49,6 +43,7 @@
                         <img src="test.jpg" alt="" style="width: 100%;" draggable="false">
                     </div>
                     <!-- <div class="dot rotate" id="rotate"></div> -->
+
                     <div class="dot left-top" id="left-top"></div>
                     <div class="dot left-bottom" id="left-bottom"></div>
                     <div class="dot top-mid" id="top-mid"></div>
@@ -65,13 +60,11 @@
 
 
 
-
-
-         
+<!-- 
         <div class="second" id="second">
             <div class="box_2_wrapper" id="box_2_wrapper">
                 <div class="box_2 box_section" id="box_2" data-current-box-number="2">
-                    <!-- <div class="dot rotate" id="rotate"></div> -->
+                 
                     <div class="dot left-top" id="left-top"></div>
                     <div class="dot left-bottom" id="left-bottom"></div>
                  
@@ -82,20 +75,78 @@
                 </div>
             </div>
         </div>
-
-
+ -->
 
 
     </div>
 
 
 
-    <button class="btn btn-success btn-lg" id="savebutton">
+<div class="m-2"  id="editElements">
+    <button class="btn btn-success me-2" id="savebutton">
 
         save
 
     </button>
 
+    <input type="file"  accept="image/*" name="image" id="file"  onchange="loadImage(event)" style="display: none;">
+    <button class="btn btn-primary me-2"> <label for="file" class="text-light" style="cursor: pointer;">Upload Bg Image</label> </button>
+
+
+
+
+  
+<button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    change bg color
+  </button>
+  
+
+
+
+</div>
+
+
+
+<div id="addNewSectionButton">
+    <button class="btn btn-info"> Add Section </button>
+</div>
+
+
+<div id="EditSectionButton">
+    <button class="btn btn-info"> Edit Item <span id="currentSelectedSection"></span> </button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">change Background Color</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <!-- take colour input -->
+        <input type="color" id="color_input" class="w-100" value="#ff0000" onchange="bgColorChange(this.value)">
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+         
+        </div>
+      </div>
+    </div>
+  </div> 
+   
 
 
 
@@ -108,6 +159,21 @@
     <script src="script.js"></script>
 
     <script>
+
+
+
+    var loadImage = function(event) {
+        var image = document.getElementById('output_bg_image');
+        image.src = URL.createObjectURL(event.target.files[0]);
+    };
+
+    function bgColorChange(value){
+        document.getElementById('full_container').style.backgroundColor = value;
+    }
+        
+ 
+
+
         
 var box = elementFinder("box");
 var boxWrapper = elementFinder("box-wrapper");
@@ -138,7 +204,7 @@ function repositionElement(x, y) {
     boxWrapper.style.left = LeftinPercentage + '%';
     boxWrapper.style.top = TopinPercentage + '%';
 
-    elementFinder('selected_item').innerHTML = 'left: ' + LeftinPercentage + "%" + ' top: ' + TopinPercentage + "%";
+   
 
     const item1 = {
         'left': x,

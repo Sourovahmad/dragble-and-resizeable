@@ -10,19 +10,57 @@ function elementFinder(id){
 
 
 
+function repositionElement(x, y, element_id) {
+
+    console.log(element_id);
+
+    const LeftinPercentage = ((x*100)/containerWidth).toFixed(2);
+    const TopinPercentage = ((y*100)/containerHeight).toFixed(2);
+
+    const boxWrapper = elementFinder(`box-wrapper_${element_id}`);
+
+    boxWrapper.style.left = LeftinPercentage + '%';
+    boxWrapper.style.top = TopinPercentage + '%';
+   
+    const item_element_id = {
+        'left': x,
+        'top': y
+    }
+    
+    itemdimensions[0] = item1;
+
+}
+
+
+const listeningAllBoxs = () => {
+
+    const allBoxs = document.querySelectorAll( "#box" );
+    allBoxs.forEach( element => {
+        element.onclick = function(event) {
+            const number = element.getAttribute( "data-current-box-number" )
+            alert( number )
+        }
+        
+    } )
+}
+
+
 
 
 ////// Add new Section //////
 
-let currentSections = 2;
+let currentSections = 1;
 
 elementFinder('addNewSectionButton').addEventListener('click', function(){
 
     const newSectionNumber = currentSections += 1;
     
-    const newHtml = `<div id="full_Box_${newSectionNumber}">
+    const newDiv = document.createElement('div');
+    newDiv.setAttribute('id', `section_${newSectionNumber}`);
+
+    const newHtml = `
     <div class="box-wrapper" id="box-wrapper_${newSectionNumber}">
-        <div class="box_${newSectionNumber} box_section" id="box_${newSectionNumber}" data-current-box-number="${newSectionNumber}"> 
+        <div class="box_${newSectionNumber} box_section" id="box" data-current-box-number="${newSectionNumber}"> 
 
             <div class="dot left-top" id="left-top_${newSectionNumber}"></div>
             <div class="dot left-bottom" id="left-bottom_${newSectionNumber}"></div>
@@ -36,27 +74,25 @@ elementFinder('addNewSectionButton').addEventListener('click', function(){
              </p>
         </div>
     </div>
-</div>`
+`
+    newDiv.innerHTML = newHtml;
+    elementFinder('full_container').appendChild(newDiv);
+    listeningAllBoxs();
 
-
-    elementFinder('full_container').insertAdjacentHTML('beforeend', newHtml);
     var newWrapper = document.getElementById(`box-wrapper_${newSectionNumber}`);
     
-    newWrapper.style.left = 50 + '%';
-    newWrapper.style.top = 50 + '%';
+    newWrapper.style.left = '50%';
+    newWrapper.style.top =  '50%';
 
+    const newBox = document.getElementById(`box_${newSectionNumber}`);
+    newBox.style.width = '80px';
+    newBox.style.height = '80px';
+
+
+
+ 
   
 });
 
 
-const boxSection = document.getElementsByClassName('box_section');
-
-Array.prototype.forEach.call(boxSection, function(el) {
-    el.addEventListener('mousedown', function(){
-        const currentBoxNumber = this.getAttribute('data-current-box-number');
-        
-
-
-    });
-
-});
+listeningAllBoxs();

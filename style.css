@@ -1,3 +1,8 @@
+
+
+
+
+
 .box {
     background-color: #00BCD4;
     position: absolute;
@@ -7,7 +12,23 @@
     height: 80px;
     width: 80px;
 }
+.box_section{
+    background-color: #00BCD4;
+    position: absolute;
+    user-select: none;
+    transform: translate(-50%, -50%);
 
+    height: 80px;
+}
+
+.section_dimensionDetails{
+    width: 12%;
+    background-color: aquamarine;
+    position: absolute;
+    right: 2%;
+    top: 2%;
+
+}
 
 .box_2 {
     background-color: #00BCD4;
@@ -40,6 +61,15 @@
     border-radius: 100px;
     border: 1px solid white;
     user-select: none;
+}
+
+.deleteIcon{
+    height: 20px;
+    width: 20px;
+    background-color: #1E88E5;
+    position: absolute;
+    top: -14px;
+    left: calc(50% - 8px);
 }
 
 .dot:hover {
@@ -119,10 +149,59 @@
 } */
 
 .customModal{
-    height: 400px;
     width: 100%;
+    height: 100vh;
     background-color: tomato;
     overflow: hidden;
     margin: auto;
     position: relative;
+}
+
+
+#editElements{
+    min-height: 53px;
+    width: auto;
+    background-color: #00364A;
+    border-radius: 1em;
+    position: fixed;
+    left: 50%;
+    bottom: 2%;
+    transform: translate(-50%, 0%);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+}
+
+#addNewSectionButton{
+    min-height: 53px;
+    width: auto;
+    background-color: #00364A;
+    border-radius: 1em;
+    position: fixed;
+    left: 80%;
+    bottom: 3%;
+    transform: translate(-50%, 0%);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+}
+
+#EditSectionButton{
+    min-height: 53px;
+    width: auto;
+    background-color: #00364A;
+    border-radius: 1em;
+    position: fixed;
+    left: 20%;
+    bottom: 3%;
+    transform: translate(-50%, 0%);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
 }
