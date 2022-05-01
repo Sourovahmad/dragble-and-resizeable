@@ -30,7 +30,7 @@
 
 }
 
-.box_2 {
+.box_section {
     background-color: #00BCD4;
     position: absolute;
     user-select: none;
@@ -124,6 +124,10 @@
     /* cursor: s-resize; */
 }
 
+
+.selected_dot{
+    background-color: gold !important;
+}
 
 
 
