@@ -81,6 +81,7 @@ const listeningAllBoxs = () => {
             currentElement.addEventListener('mousemove', eventMoveHandler_for_box, false);
 
 
+
             window.addEventListener('mouseup', function eventEndHandler() {
                 currentElement.removeEventListener('mousemove', eventMoveHandler_for_box, false);
                 window.removeEventListener('mouseup', eventEndHandler);
@@ -98,6 +99,13 @@ const listeningAllBoxs = () => {
             selectedElementDot.forEach( element => {
                 element.classList.add( "selected_dot" );
             });
+
+
+            // this is for adding pixel in top right 
+            const ThenewBox =  currentElement.querySelector(`#boxs`);
+            const theNewboxW = ThenewBox.offsetWidth;
+            const theNewboxH = ThenewBox.offsetHeight;
+            elementFinder('box_1_dimensin_details').innerHTML =  theNewboxW + "px" + "/" + theNewboxH + "px";
 
 
 
