@@ -13,12 +13,14 @@ const NewcontainerHeight = elementFinder('full_container').offsetHeight;
 
 
 // End of helper functions // 
+ 
+
+
+
 
 
 
 function repositionElement_boxs(x, y,element_id) {
-
-    console.log(element_id);
 
     const BoxLeftinPercentage = ((x*100)/NewcontainerWidth).toFixed(2);
     const BoxTopinPercentage = ((y*100)/NewcontainerHeight).toFixed(2);
@@ -27,10 +29,26 @@ function repositionElement_boxs(x, y,element_id) {
 
     NewboxWrapper.style.left = BoxLeftinPercentage + '%';
     NewboxWrapper.style.top = BoxTopinPercentage + '%';
-   
-
-
 }
+
+
+function resize_box(e,w, h){
+
+    const newBoxWrapper = elementFinder(`box-wrapper_${e}`)
+    const newBox =  newBoxWrapper.querySelector(`#boxs`)
+
+    newBox.style.width = w + 'px';
+    newBox.style.height = h + 'px';
+
+    elementFinder('box_1_dimensin_details').innerHTML =  w + "px" + "/" + h + "px";
+}
+
+
+
+
+
+
+
 
 
 const listeningAllBoxs = () => {
@@ -81,7 +99,140 @@ const listeningAllBoxs = () => {
                 element.classList.add( "selected_dot" );
             });
 
-            console.log(selectedElementDot);
+
+
+
+
+            // resize element start here
+
+            const crentE = currentElementNumber;
+
+            var rightMid_crentE = elementFinder(`right-mid_${crentE}`);
+            var leftMid_crentE = elementFinder(`left-mid_${crentE}`);
+            var topMid_crentE = elementFinder(`top-mid_${crentE}`);
+            var bottomMid_crentE = elementFinder(`bottom-mid_${crentE}`);
+
+            var leftTop_crentE = elementFinder(`left-top_${crentE}`);
+            var rightTop_crentE = elementFinder(`right-top_${crentE}`);
+            var rightBottom_crentE = elementFinder(`right-bottom_${crentE}`);
+            var leftBottom_crentE = elementFinder(`left-bottom_${crentE}`);
+
+
+
+
+
+            function resizeHandler_boxs(event, left = false, top = false, xResize = false, yResize = false) {
+
+
+                const newBoxWrapper = elementFinder(`box-wrapper_${crentE}`)
+                let newMinWidth = 80;
+                let newMinHeight = 80;
+
+               let newinitX = newBoxWrapper.offsetLeft;
+               let newinitY = newBoxWrapper.offsetTop;
+
+               let NewmousePressX = event.clientX;
+               let NewmousePressY = event.clientY;
+
+
+               const newBox =  newBoxWrapper.querySelector(`#boxs`)
+            
+               let newinitW = newBox.offsetWidth;
+               let newinitH = newBox.offsetHeight;
+            
+                initRotate = getCurrentRotation_box(newBoxWrapper);
+                var initRadians = initRotate * Math.PI / 180;
+                var cosFraction = Math.cos(initRadians);
+                var sinFraction = Math.sin(initRadians);
+                
+                function eventMoveHandler_for_box(event) {
+                    var wDiff = (event.clientX - NewmousePressX);
+                    var hDiff = (event.clientY - NewmousePressY);
+                    var rotatedWDiff = cosFraction * wDiff + sinFraction * hDiff;
+                    var rotatedHDiff = cosFraction * hDiff - sinFraction * wDiff;
+            
+                    var newW = newinitW, newH = newinitH, newX = newinitX, newY = newinitY;
+            
+                    if (xResize) {
+                        if (left) {
+                            newW = newinitW - rotatedWDiff;
+                            if (newW < newMinWidth) {
+                              newW = newMinWidth;
+                              rotatedWDiff = newinitW - newMinWidth;
+                            }
+                        } else {
+                            newW = newinitW + rotatedWDiff;
+                            if (newW < newMinWidth) {
+                              newW = newMinWidth;
+                              rotatedWDiff = newMinWidth - newinitW;
+                            }
+                        }
+                        newX += 0.5 * rotatedWDiff * cosFraction;
+                        newY += 0.5 * rotatedWDiff * sinFraction;
+                    }
+            
+                    if (yResize) {
+                        if (top) {
+                            newH = newinitH - rotatedHDiff;
+                            if (newH < newMinHeight) {
+                              newH = newMinHeight;
+                              rotatedHDiff = newinitH - newMinHeight;
+                            }
+                        } else {
+                            newH = newinitH + rotatedHDiff;
+                            if (newH < newMinHeight) {
+                              newH = newMinHeight;
+                              rotatedHDiff = newMinHeight - newinitH;
+                            }
+                        }
+                        newX -= 0.5 * rotatedHDiff * sinFraction;
+                        newY += 0.5 * rotatedHDiff * cosFraction;
+                    }
+            
+                    resize_box(currentElementNumber,newW, newH);
+                    repositionElement_boxs(newX, newY, currentElementNumber);
+                }
+            
+            
+                window.addEventListener('mousemove', eventMoveHandler_for_box, false);
+                window.addEventListener('mouseup', function eventEndHandler() {
+                    window.removeEventListener('mousemove', eventMoveHandler_for_box, false);
+                    window.removeEventListener('mouseup', eventEndHandler);
+                }, false);
+            }
+            
+            
+            
+            function getCurrentRotation_box(el) {
+                var st = window.getComputedStyle(el, null);
+                var tm = st.getPropertyValue("-webkit-transform") ||
+                    st.getPropertyValue("-moz-transform") ||
+                    st.getPropertyValue("-ms-transform") ||
+                    st.getPropertyValue("-o-transform") ||
+                    st.getPropertyValue("transform")
+                "none";
+                if (tm != "none") {
+                    var values = tm.split('(')[1].split(')')[0].split(',');
+                    var angle = Math.round(Math.atan2(values[1], values[0]) * (180 / Math.PI));
+                    return (angle < 0 ? angle + 360 : angle);
+                }
+                return 0;
+            }
+            
+
+
+
+
+            rightMid_crentE.addEventListener('mousedown', e => resizeHandler_boxs(e, false, false, true, false));
+            leftMid_crentE.addEventListener('mousedown', e => resizeHandler_boxs(e, true, false, true, false));
+            topMid_crentE.addEventListener('mousedown', e => resizeHandler_boxs(e, false, true, false, true));
+            bottomMid_crentE.addEventListener('mousedown', e => resizeHandler_boxs(e, false, false, false, true));
+            leftTop_crentE.addEventListener('mousedown', e => resizeHandler_boxs(e, true, true, true, true));
+            rightTop_crentE.addEventListener('mousedown', e => resizeHandler_boxs(e, false, true, true, true));
+            rightBottom_crentE.addEventListener('mousedown', e => resizeHandler_boxs(e, false, false, true, true));
+            leftBottom_crentE.addEventListener('mousedown', e => resizeHandler_boxs(e, true, false, true, true));
+
+
         
 
         }
